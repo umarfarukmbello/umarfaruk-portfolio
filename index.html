@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umar Faruk | Cyber Security Specialist</title>
-
+  
   <!-- Favicon/Avatar Link: Using the reliable PNG format -->
   <link rel="icon" type="image/png" href="img/avatar.png">
-
+  
   <!-- Load Google Font for Signature Style -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"> 
   <!-- Using Dancing Script - it's elegant and less readable for a signature look -->
-
+  
   <!-- Load Tailwind CSS from CDN for instant styling -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Tailwind CSS Config to enable 'dark' class mode -->
@@ -180,10 +180,10 @@
     achievements: [
       { title: "3x Dean's List Award", desc: "Maintained exceptional academic performance for three consecutive semesters.", imageUrl: "img/dean list.jpeg" },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
-      {
-        title: "SCIC Committee Member Recognition",
-        desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
-        imageUrl: "img/SCI Com.jpg"
+      { 
+        title: "SCIC Committee Member Recognition", 
+        desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.", 
+        imageUrl: "img/SCI Com.jpg" 
       }, // ADDED NEW ACHIEVEMENT
       { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
     ],
@@ -285,8 +285,8 @@
           {/* Header and Close Button */}
           <div className="flex justify-between items-center mb-10 border-b border-gray-200 dark:border-gray-700 pb-4">
             <h2 className="text-4xl font-extrabold text-red-600 font-signature leading-none">
-              {/* Apply signature font here too */}
-              Umar Faruk
+                {/* Apply signature font here too */}
+                Umar Faruk
             </h2>
             <button
               onClick={closeMenu}
@@ -344,7 +344,7 @@
       { linkText: 'Achievements', href: '#achievements' },
       { linkText: 'Contact', href: '#contact' }
     ];
-
+    
     // Function to close the mobile menu
     const closeMenu = () => setIsMenuOpen(false);
 
@@ -373,7 +373,7 @@
                       target={item.linkText === 'Resume' ? '_blank' : '_self'}
                     >
                       {item.linkText}
-                    </a>
+                      </a>
                   </li>
                 ))}
               </ul>
@@ -409,7 +409,7 @@
             </div>
           </div>
         </nav>
-
+        
         {/* Mobile Menu Rendered outside of Navbar, but controlled here */}
         <MobileMenu
           isOpen={isMenuOpen}
@@ -555,8 +555,8 @@
         <div className="flex justify-center md:justify-start pt-8 pb-4">
           {/* Static illustration for Cyber Security / Typing setup */}
           <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Desk (Brown) */}
-            <rect x="0" y="220" width="400" height="80" rx="5" fill="#B48D6C" className="dark:fill-gray-700"/>
+            {/* Desk (Brown) - Reduced width and centered by shifting X position */}
+            <rect x="50" y="220" width="300" height="80" rx="5" fill="#B48D6C" className="dark:fill-gray-700"/>
             {/* Monitor (Dark Gray/Black) */}
             <rect x="150" y="70" width="100" height="100" rx="8" fill="#333333" className="dark:fill-gray-700"/>
             <rect x="145" y="65" width="110" height="10" rx="3" fill="#6B7280" className="dark:fill-gray-600"/>
@@ -617,7 +617,8 @@
 
         {/* Right Column: New Interactive Illustration (Takes full width on mobile, 1/2 on desktop) */}
         <div className="flex justify-center md:justify-end md:col-span-1">
-          <svg width="100%" height="400px" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
+          {/* Reduced height from 400px to 300px to fix vertical overflow */}
+          <svg width="100%" height="300px" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
             {/* Laptop Base */}
             <rect x="50" y="150" width="280" height="120" rx="10" fill="#374151" className="shadow-lg dark:fill-gray-700"/>
             {/* Laptop Screen */}
@@ -649,6 +650,8 @@
           </svg>
         </div>
       </div>
+      {/* ADDED bottom padding to ensure clear separation from the next section */}
+      <div className="pt-10"></div> 
     </section>
   );
 
@@ -950,7 +953,7 @@
         }
       } else {
         // At or near the top, always show the navbar
-        setIsVisible(true);
+          setIsVisible(true);
       }
 
       setLastScrollY(currentScrollY);
