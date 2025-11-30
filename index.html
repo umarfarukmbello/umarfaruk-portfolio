@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umar Faruk | Cyber Security Specialist</title>
+
+  <!-- Favicon/Avatar Link: Using the reliable PNG format -->
+  <link rel="icon" type="image/png" href="img/avatar.png">
+
+  <!-- Load Google Font for Signature Style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Using Dancing Script - it's elegant and less readable for a signature look -->
+
+  <!-- Load Tailwind CSS from CDN for instant styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS Config to enable 'dark' class mode -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <!-- Load React and ReactDOM Libraries from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Load Babel for JSX compilation in the browser (bypasses Node/Vite build steps) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Base Light Theme Styling */
+    body {
+      background-color: #f7f7f7; /* Very Light Gray/Off-White */
+      color: #333333; /* Dark text */
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* Dark Theme Base (Applied when 'dark' class is on html) */
+    html.dark body {
+      background-color: #111827; /* Dark Gray (Tailwind gray-900) */
+      color: #e5e7eb; /* Light text */
+    }
+
+    /* Custom style for the signature font */
+    .font-signature {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    .section-scroll-padding {
+      /* Fixes issue with fixed nav bar covering section headers */
+      padding-top: 100px;
+      margin-top: -100px;
+    }
+    /* Custom progress bar styles */
+    .progress-bar-container {
+      background-color: #e5e7eb; /* Light background for the bar track */
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      /* Primary color for Cyber Security focus */
+      background-color: #dc2626;
+      transition: width 1s ease-in-out;
+    }
+    /* Ensure responsive font size on mobile */
+    @media (max-width: 640px) {
+      .text-6xl { font-size: 3rem; }
+    }
+    /* Custom grid for side-by-side cards */
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    /* Waving hand animation */
+    @keyframes wave {
+      0% { transform: rotate( 0.0deg) }
+      10% { transform: rotate(14.0deg) }
+      20% { transform: rotate(-8.0deg) }
+      30% { transform: rotate(14.0deg) }
+      40% { transform: rotate(-4.0deg) }
+      50% { transform: rotate(10.0deg) }
+      60% { transform: rotate( 0.0deg) }
+      100% { transform: rotate( 0.0deg) }
+    }
+    .animate-wave {
+      animation: wave 2.5s infinite;
+      transform-origin: 70% 70%;
+      display: inline-block;
+    }
+
+    /* Pulse animation for the interactive SVG glow effect on hover/pulse core */
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 2s infinite ease-in-out;
+    }
+
+    /* Animation for code typing/scrolling effect */
+    @keyframes code-typing {
+      0% { transform: translateX(0px); opacity: 0.8; }
+      50% { transform: translateX(5px); opacity: 1; }
+      100% { transform: translateX(0px); opacity: 0.8; }
+    }
+    .animate-code {
+      animation: code-typing 1.5s infinite alternate;
+    }
+
+    /* Animation for robotic arm tapping */
+    @keyframes arm-tap {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    /* Animating the entire arm group */
+    .animate-arm {
+      animation: arm-tap 1s infinite alternate;
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+  const { useState, useEffect } = React;
+
+  // --- Portfolio Data (Customized for Cyber Security) ---
+  const portfolioData = {
+    name: "Umar Faruk", // CHANGED: from "Umar Faruk Mbello" to "Umar Faruk"
+    title: "Cyber Security Specialist & Network Defense Engineer",
+    bio: "A Computer Science specialist focused on protecting digital assets, implementing robust security protocols, and performing penetration testing and vulnerability analysis. Proficient in network defense and threat intelligence.",
+    socials: [
+      { name: "LinkedIn", url: "https://www.linkedin.com/in/umar-faruk-bello-84594831a/", icon: "in" },
+      { name: "GitHub", url: "https://github.com/umarfarukmbello", icon: "gh" },
+      { name: "Email", url: "mailto:belloumarfaruk05@gmail.com", icon: "em" }
+    ],
+    phone: "+60 11-6183 3761", // Added phone number
+    // Profile and Award image placeholders (Referencing local files from the img/ folder)
+    PROFILE_PHOTO_URL: "img/id card-12.jpg",
+    AWARD_PHOTO_URL: "img/best research.jpeg",
+    // NOTE: For the FYP logo, we use a placeholder since it's not provided in the asset list
+    FYP_LOGO_URL: "https://placehold.co/100x100/3B82F6/FFFFFF?text=SMS",
+    SCIC_LOGO_URL: "img/SCI Com.jpg",
+    // --- UPDATED: Pointing to the new image file in the local assets folder ---
+    AIU_LOGO_URL: "img/aiu logo2.png",
+
+    techStack: [
+      { skill: "Penetration Testing (Metasploit/Kali Linux)", proficiency: 95 },
+      { skill: "Incident Response", proficiency: 92 },
+      { skill: "Network Security (Firewalls/IDS/IPS)", proficiency: 90 },
+      { skill: "Google Cloud Security (GCP)", proficiency: 90 },
+      { skill: "Vulnerability Assessment (Nmap/Wireshark)", proficiency: 88 },
+      { skill: "Scripting (Python/Bash)", proficiency: 75 },
+    ],
+    capabilities: [
+      "Developing secure, scalable systems using Spring Boot and React.",
+      "Conducting penetration testing and ethical hacking for web applications.",
+      "Implementing network defense strategies (Firewalls, IDS/IPS).",
+      "Leading incident response and forensic analysis efforts.",
+      "Managing cloud security and compliance within Google Cloud Platform (GCP)."
+    ],
+    // UPDATED EDUCATION - Only the relevant entry remains
+    education: [
+      {
+        institution: "AlBukhary International University",
+        degree: "Bachelor of Computer Science",
+        years: "2023 - Present",
+        details: [
+          "Executive Committee member, School of Computing and Informatics.",
+        ],
+        logoKeys: ["AIU_LOGO_URL"] // Key for the AIU logo
+      },
+    ],
+    certifications: [], // REMOVED: Certifications as requested by the user
+    achievements: [
+      { title: "3x Dean's List Award", desc: "Maintained exceptional academic performance for three consecutive semesters.", imageUrl: "img/dean list.jpeg" },
+      { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
+      { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
+    ],
+    experience: [
+      {
+        title: "System Administrator & Support (FYP)",
+        company: "Digital School Management System",
+        logoUrl: "FYP_LOGO_URL",
+        years: "2024 - Present",
+        description: [
+          "Architected and deployed a web-based School Management System (SMS) built with **Spring Boot (Backend)** and **React (Frontend)**.",
+          "Responsible for maintaining backend integrity, ensuring system uptime, and providing technical support for user interfaces (Principal, Class Master, Teacher).",
+          "Focused on delivering secure, data-driven solutions for attendance tracking, grading, and scheduling to a real-world institution."
+        ]
+      },
+      {
+        title: "Media Executive | SCIC Committee",
+        company: "AlBukhary International University (AIU)",
+        logoUrl: "SCIC_LOGO_URL",
+        years: "2024 - 2025 (Current)",
+        description: [
+          "Serve as Media Executive on the School of Computing and Informatics Community (SCIC) committee.",
+          "Responsible for designing, promoting, and managing digital outreach for university events and technical workshops.",
+          "Contribute to organizing and executing extra-curricular activities for the School of Computing and Informatics."
+        ]
+      }
+    ],
+    projects: [
+      {
+        title: "1. Predictive Modeling for Cybersecurity Risk Assessment",
+        desc: "Developed a machine learning framework integrating textual (CVE), categorical (CWE), and numerical (CVSS) data to automatically classify vulnerabilities into severity levels (High/Medium/Low). Achieved F1 score of 0.9928 with a Random Forest model, demonstrating scalable, context-aware security triage.",
+        tags: ["Machine Learning", "CVE/CWE Analysis", "Risk Prioritization", "Random Forest"]
+      },
+      {
+        title: "2. SECURE STUDENT PORTAL Security Plan",
+        desc: "Detailed security architecture plan for a Student Portal (registration, payments). Follows best practices from OWASP ASVS/Top 10 and NIST SSDF, including STRIDE threat modeling, clear trust boundaries, and a comprehensive security testing plan.",
+        tags: ["OWASP", "NIST SSDF", "STRIDE", "Security Architecture"]
+      },
+      {
+        title: "3. Secure and Tamper-Proof Firmware Update Framework",
+        desc: "Engineered a robust framework using encrypted update delivery and integrity checks to secure firmware from compromise, mitigating the risk of malicious code injection during the update process.",
+        tags: ["Firmware Security", "Encryption", "Integrity", "IoT Security"]
+      },
+    ],
+    resumeUrl: "#"
+  };
+
+  // --- Utility Components ---
+  const Icon = ({ name }) => {
+    // Uses PNG files for LinkedIn and GitHub icons
+    switch (name) {
+      case 'in':
+        return <img src="img/linkedin icon.png" alt="LinkedIn Icon" className="w-6 h-6 object-contain" />;
+      case 'gh':
+        return <img src="img/github icon.png" alt="GitHub Icon" className="w-6 h-6 object-contain" />;
+      case 'em':
+        // Keep the SVG for Email
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
+      case 'ph': // Phone icon SVG
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-5.65-5.65 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 17.65 17.65 0 0 0 .1 1.67 2 2 0 0 1-2 2.76 17.06 17.06 0 0 0 4.14 4.14 2 2 0 0 1 2.76-2 17.65 17.65 0 0 0 1.67.1A2 2 0 0 1 20 13.92v3z"/></svg>;
+      case 'sun':
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M6.34 17.66l-1.42 1.42M19.07 4.93l-1.42 1.42"/></svg>;
+      case 'moon':
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>;
+      case 'download': // ADDED
+        return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>;
+      case 'menu': // Hamburger icon
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>;
+      case 'x': // Close icon
+        return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>;
+      default:
+        return <span>{name}</span>;
+    }
+  };
+
+  // UPDATED: SkillBar component (non-interactive)
+  const SkillBar = ({ label, percentage }) => {
+    return (
+      <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600 shadow-sm">
+        <div className="mb-4">
+          <div className="flex justify-between mb-1">
+            <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">{label}</span>
+            <span className="text-lg font-bold text-red-600">{percentage}%</span>
+          </div>
+          <div className="progress-bar-container">
+            <div className="progress-bar" style={{ width: `${percentage}%` }}></div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
+  // --- Mobile Menu Component ---
+  const MobileMenu = ({ isOpen, navItems, isDarkMode, toggleTheme, closeMenu }) => {
+    return (
+      <div className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="h-full w-full bg-white dark:bg-gray-900 shadow-2xl p-6 flex flex-col">
+          {/* Header and Close Button */}
+          <div className="flex justify-between items-center mb-10 border-b border-gray-200 dark:border-gray-700 pb-4">
+            <h2 className="text-4xl font-extrabold text-red-600 font-signature leading-none">
+              {/* Apply signature font here too */}
+              Umar Faruk
+            </h2>
+            <button
+              onClick={closeMenu}
+              className="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              aria-label="Close Menu"
+            >
+              <Icon name="x" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <ul className="flex flex-col space-y-6 text-xl font-medium flex-grow">
+            {navItems.map((item) => (
+              <li key={item.linkText}>
+                <a
+                  href={item.href}
+                  onClick={closeMenu} // Close menu on link click
+                  className="block py-2 text-gray-700 dark:text-gray-300 hover:text-red-600 transition border-b border-gray-100 dark:border-gray-800"
+                >
+                  {item.linkText}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Theme Toggle (Persistent on Mobile) - Displayed inside the mobile menu for convenience */}
+          <div className="mt-8 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Theme Preference</h3>
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center justify-center space-x-3 p-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300 shadow-md"
+              title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              <Icon name={isDarkMode ? 'sun' : 'moon'} />
+              <span className="font-bold">{isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
+  // --- Main Components ---
+
+  const Navbar = ({ isVisible, isDarkMode, toggleTheme }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const navItems = [
+      { linkText: 'Focus', href: '#what-i-do' },
+      { linkText: 'Experience', href: '#experience' },
+      { linkText: 'Proficiency', href: '#skills' },
+      { linkText: 'Projects', href: '#projects' },
+      { linkText: 'Education', href: '#education' },
+      { linkText: 'Achievements', href: '#achievements' },
+      { linkText: 'Contact', href: '#contact' }
+    ];
+
+    // Function to close the mobile menu
+    const closeMenu = () => setIsMenuOpen(false);
+
+    // Determine the transition class based on the scroll logic from the App component
+    const visibilityClass = isVisible
+      ? 'translate-y-0 opacity-100' // Fully visible
+      : '-translate-y-full opacity-0'; // Slide up and fade out
+
+    return (
+      <>
+        <nav className={`fixed top-0 left-0 right-0 z-20 bg-white dark:bg-gray-900 py-4 transition-all duration-300 ease-in-out ${visibilityClass}`}>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            {/* Logo/Name - Signature Text */}
+            <a href="#" className="text-3xl font-extrabold text-red-600 hover:text-red-500 transition font-signature leading-none">
+              Umar Faruk
+            </a>
+
+            {/* Desktop Navigation Links and Theme Toggle */}
+            <div className="hidden sm:flex items-center">
+              <ul className="flex items-center space-x-6 text-sm font-medium">
+                {navItems.map((item) => (
+                  <li key={item.linkText}>
+                    <a
+                      href={item.href}
+                      className="text-gray-700 dark:text-gray-300 hover:text-red-600 transition"
+                      target={item.linkText === 'Resume' ? '_blank' : '_self'}
+                    >
+                      {item.linkText}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {/* Theme Toggle Button (Desktop Only) */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 ml-4 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300 shadow-inner"
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              >
+                <Icon name={isDarkMode ? 'sun' : 'moon'} />
+              </button>
+            </div>
+
+            {/* Mobile Actions: Theme Toggle and Menu Button (Visible on Small Screens) */}
+            <div className="flex sm:hidden items-center space-x-2">
+              {/* Theme Toggle Button (Mobile) - Now always visible */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300 shadow-inner"
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label="Toggle Theme"
+              >
+                <Icon name={isDarkMode ? 'sun' : 'moon'} />
+              </button>
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition duration-300"
+                aria-label="Open Menu"
+              >
+                <Icon name="menu" />
+              </button>
+            </div>
+          </div>
+        </nav>
+
+        {/* Mobile Menu Rendered outside of Navbar, but controlled here */}
+        <MobileMenu
+          isOpen={isMenuOpen}
+          navItems={navItems}
+          isDarkMode={isDarkMode}
+          toggleTheme={toggleTheme}
+          closeMenu={closeMenu}
+        />
+      </>
+    );
+  };
+
+  const Hero = () => {
+    // Interactive Scanning Lock Illustration in place of the profile photo
+    return (
+      <section id="hero" className="min-h-screen pt-24 pb-24 flex flex-col items-center justify-center text-center md:flex-row md:text-left bg-white dark:bg-gray-900">
+        {/* Left Side: Text and Bio */}
+        <div className="md:w-3/5 p-4">
+          <h1 className="text-6xl sm:text-7xl font-extrabold mb-4 text-gray-800 dark:text-gray-100">
+            {/* CHANGED: Name display to use "Umar" only */}
+            Hi, I'm <span className="text-red-600">Umar</span>. <span className="text-4xl animate-wave">👋</span>
+          </h1>
+          <p className="text-2xl text-gray-600 dark:text-gray-300 mb-6">
+            {portfolioData.title}
+          </p>
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-10 max-w-xl mx-auto md:mx-0">
+            {portfolioData.bio}
+          </p>
+          {/* Social Icons */}
+          <div className="flex space-x-4 justify-center md:justify-start mt-4">
+            {portfolioData.socials.map(social => (
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 text-gray-500 dark:text-gray-400 hover:text-red-600 transition duration-300"
+              >
+                <Icon name={social.icon} />
+              </a>
+            ))}
+          </div>
+
+          {/* Action Buttons: Contact Me & Download Resume */}
+          <div className="mt-4 flex justify-center md:justify-start space-x-4">
+
+            {/* 1. Contact Me Button (Scroll to Contact Section) - ADDED */}
+            <a
+              href="#contact"
+              className="flex items-center space-x-2 bg-red-600 text-white py-1.5 px-4 rounded-lg hover:bg-red-700 transition duration-300 shadow-xl font-bold text-sm"
+              // Use primary style for Contact Me as it's the main next action
+            >
+              <span>Contact Me</span>
+              <Icon name="em" />
+            </a>
+
+            {/* 2. Download Resume Button (Download File) */}
+            <a
+              href={portfolioData.resumeUrl}
+              download // This attribute suggests the browser should download the file
+              target="_blank"
+              // CHANGED: py-2 px-5 text-md to py-1.5 px-4 text-sm
+              className="flex items-center space-x-2 bg-red-600 text-white py-1.5 px-4 rounded-lg hover:bg-red-700 transition duration-300 shadow-xl font-bold text-sm"
+              // CORRECTED: Ensure it is red (bg-red-600)
+            >
+              <span>Download Resume</span>
+              <Icon name="download" />
+            </a>
+          </div>
+        </div>
+
+        {/* Right Side: Interactive Scanning Lock Illustration */}
+        <div className="md:w-2/5 mt-10 md:mt-0 flex justify-center p-4 relative">
+          <div className="w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center relative group">
+            <svg
+              className="w-full h-full"
+              viewBox="0 0 300 300"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                {/* Define clip-path for the lock shape */}
+                <clipPath id="lockClip">
+                  <rect x="50" y="70" width="200" height="200" rx="20" fill="black" />
+                  <path d="M100 70 A50 50 0 0 1 200 70 V70 H100 Z" fill="black"/>
+                </clipPath>
+
+                {/* Define gradient for the scanning line */}
+                <linearGradient id="scanGradient" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="rgba(255, 255, 255, 0)" />
+                  <stop offset="50%" stopColor="rgba(239, 68, 68, 0.8)" /> {/* Red scan line */}
+                  <stop offset="100%" stopColor="rgba(255, 255, 255, 0)" />
+                </linearGradient>
+              </defs>
+
+              {/* 1. Main Lock Body (Circuit Board effect) */}
+              <rect x="50" y="70" width="200" height="200" rx="20" fill="#374151" className="shadow-2xl transition-all duration-500 group-hover:fill-gray-700"/>
+
+              {/* 2. Lock Shackle (Top U-shape) */}
+              <path d="M100 70 A50 50 0 0 1 200 70 M200 70 V50 H100 V70" stroke="#DC2626" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" fill="none" className="transition-all duration-300 group-hover:stroke-red-400"/>
+
+              {/* 3. Lock Keyhole/Core (The center of the defense) */}
+              <circle cx="150" cy="170" r="30" fill="#1F2937" stroke="#DC2626" strokeWidth="3" className="transition-colors duration-500 group-hover:fill-gray-900 group-hover:stroke-red-400"/>
+              <circle cx="150" cy="170" r="10" fill="#DC2626" className="animate-pulse-slow transition-all duration-300 group-hover:scale-125"/>
+
+              {/* 4. Circuit Detail (Inner Glow/Code) - Overlay */}
+              <g fill="none" stroke="#DC2626" strokeWidth="1" opacity="0.4" className="transition-opacity duration-300 group-hover:opacity-100">
+                <path d="M70 100 L230 100 M70 130 L230 130 M70 200 L230 200 M70 230 L230 230"/>
+                <path d="M100 90 V250 M130 90 V250 M170 90 V250 M200 90 V250"/>
+                <path d="M70 90 C150 50 150 250 230 210" strokeWidth="2"/>
+              </g>
+
+              {/* 5. Interactive Scanning Line - moves over the lock body */}
+              <rect x="50" y="70" width="200" height="200" fill="url(#scanGradient)" clipPath="url(#lockClip)"
+                    className="transition-opacity duration-300 group-hover:opacity-100 opacity-80"
+              >
+                {/* Animation: Translate the scan line from top to bottom continuously */}
+                <animateTransform
+                  attributeName="transform"
+                  attributeType="XML"
+                  type="translate"
+                  from="0 -200"
+                  to="0 200"
+                  dur="4s"
+                  repeatCount="indefinite"
+                />
+              </rect>
+            </svg>
+            {/* Optional: Hidden text for accessibility */}
+            <span className="sr-only">Cyber Security Scanning Lock Illustration</span>
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+  // --- Custom Component for "What I Do" (Combining Illustration and Text) ---
+  const WhatIDoSection = () => (
+    <section id="what-i-do" className="section-scroll-padding py-20 bg-gray-50 dark:bg-gray-800">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start px-4">
+
+        {/* Left Column: Illustration (Mimicking typing setup) */}
+        <div className="flex justify-center md:justify-start pt-8 pb-4">
+          {/* Static illustration for Cyber Security / Typing setup */}
+          <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Desk (Brown) */}
+            <rect x="0" y="220" width="400" height="80" rx="5" fill="#B48D6C" className="dark:fill-gray-700"/>
+            {/* Monitor (Dark Gray/Black) */}
+            <rect x="150" y="70" width="100" height="100" rx="8" fill="#333333" className="dark:fill-gray-700"/>
+            <rect x="145" y="65" width="110" height="10" rx="3" fill="#6B7280" className="dark:fill-gray-600"/>
+            {/* Keyboard (Light Gray) */}
+            <rect x="120" y="200" width="160" height="10" rx="2" fill="#D1D5DB" className="dark:fill-gray-600"/>
+            {/* Person Head (Yellow) */}
+            <circle cx="200" cy="50" r="15" fill="#FFC700"/>
+            {/* Person Body (Red/Cyber Color) */}
+            <rect x="180" y="65" width="40" height="80" rx="5" fill="#DC2626"/>
+            {/* Typing Hands/Arms (White) */}
+            <rect x="150" y="170" width="50" height="10" rx="5" transform="rotate(10, 150, 170)" fill="#FFFFFF" className="dark:fill-gray-300"/>
+            <rect x="200" y="170" width="50" height="10" rx="5" transform="rotate(-10, 200, 170)" fill="#FFFFFF" className="dark:fill-gray-300"/>
+            {/* Security Lock Icon (Placeholder for the typing effect focus) */}
+            <svg x="185" y="90" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </svg>
+
+          {/* REMOVED: "Illustration: Focused on Secure Development." text */}
+        </div>
+
+        {/* Right Column: Capabilities and Icon Stack */}
+        <div className="md:order-last p-4">
+          <h2 className="text-4xl font-extrabold mb-3 text-gray-800 dark:text-gray-100">What I Do</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg">
+            CYBER SECURITY ENGINEER dedicated to building resilient systems and exploring every defense technique.
+          </p>
+
+          {/* Capability List */}
+          <ul className="space-y-4 text-gray-700 dark:text-gray-200">
+            {portfolioData.capabilities.map((cap, index) => (
+              <li key={index} className="flex items-start space-x-3">
+                <span className="text-red-600 text-xl font-bold flex-shrink-0">&#9889;</span> {/* Thunderbolt icon */}
+                <span>{cap}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+
+  const ProficiencySection = () => (
+    <section id="skills" className="section-scroll-padding py-20 bg-white dark:bg-gray-900">
+      <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Proficiency</h2>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 items-center px-4">
+        {/* Left Column: Skill Bars (Takes full width on mobile, 1/2 on desktop) */}
+        <div className="space-y-6 md:col-span-1">
+          {portfolioData.techStack.map((skillItem, index) => (
+            <SkillBar
+              key={index}
+              label={skillItem.skill}
+              percentage={skillItem.proficiency}
+            />
+          ))}
+        </div>
+
+        {/* Right Column: New Interactive Illustration (Takes full width on mobile, 1/2 on desktop) */}
+        <div className="flex justify-center md:justify-end md:col-span-1">
+          <svg width="100%" height="400px" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
+            {/* Laptop Base */}
+            <rect x="50" y="150" width="280" height="120" rx="10" fill="#374151" className="shadow-lg dark:fill-gray-700"/>
+            {/* Laptop Screen */}
+            <rect x="60" y="30" width="260" height="120" rx="8" fill="#1F2937" className="shadow-xl dark:fill-gray-800"/>
+            {/* Screen Content - Code Lines (Red for Cyber) - Now animated */}
+            <rect x="75" y="45" width="100" height="10" rx="2" fill="#DC2626" className="animate-code" />
+            <rect x="75" y="65" width="150" height="10" rx="2" fill="#DC2626" className="animate-code" style={{ animationDelay: '0.2s' }}/>
+            <rect x="75" y="85" width="80" height="10" rx="2" fill="#DC2626" className="animate-code" style={{ animationDelay: '0.4s' }}/>
+            <rect x="75" y="105" width="120" height="10" rx="2" fill="#DC2626" className="animate-code" style={{ animationDelay: '0.6s' }}/>
+
+            {/* Robotic Arms (Gray) - Now animated (tapping motion) */}
+            {/* Left Arm and Hand Group */}
+            <g className="animate-arm" style={{ animationDelay: '0.1s' }}>
+              <path d="M100 150 L80 100 L120 80 L140 130 C130 140 110 145 100 150 Z" fill="#6B7280" className="shadow-md dark:fill-gray-600"/>
+              <rect x="115" y="105" width="10" height="20" rx="2" fill="#4B5563" className="dark:fill-gray-500"/>
+              <rect x="125" y="110" width="10" height="15" rx="2" fill="#4B5563" className="dark:fill-gray-500" style={{ animationDelay: '0.05s' }}/>
+            </g>
+
+            {/* Right Arm and Hand Group */}
+            <g className="animate-arm">
+              <path d="M280 150 L300 100 L260 80 L240 130 C250 140 270 145 280 150 Z" fill="#6B7280" className="shadow-md dark:fill-gray-600"/>
+              <rect x="255" y="105" width="10" height="20" rx="2" fill="#4B5563" className="dark:fill-gray-500"/>
+              <rect x="245" y="110" width="10" height="15" rx="2" fill="#4B5563" className="dark:fill-gray-500" style={{ animationDelay: '0.05s' }}/>
+            </g>
+
+            {/* Data Flow/Energy in the middle (Red for Cyber) - Already pulsing */}
+            <circle cx="190" cy="90" r="15" fill="#DC2626" className="animate-pulse-slow"/>
+            <rect x="180" y="85" width="20" height="10" fill="#DC2626" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  );
+
+
+  const ExperienceBlock = ({ title, company, years, description, logoUrlKey }) => (
+    // Flex container for image and text
+    <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md border-l-4 border-red-600 flex items-start space-x-6 w-full">
+      {/* Image Container */}
+      {logoUrlKey && portfolioData[logoUrlKey] && (
+        <div className="flex-shrink-0 w-28 h-28 flex items-center justify-center p-2">
+          <img
+            src={portfolioData[logoUrlKey]}
+            alt={`${company} Logo`}
+            className="w-24 h-24 object-cover rounded-full shadow-inner border-2 border-red-200"
+            onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/96x96/4C4C4C/FFFFFF?text=${company.substring(0, 4)}` }}
+          />
+        </div>
+      )}
+
+      <div className="flex-grow py-2">
+        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
+        <p className="text-red-600 font-medium">{company} | {years}</p>
+        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mt-3 space-y-1">
+          {description.map((point, index) => (
+            <li key={index}>{point}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
+  // --- New Achievement Card Component ---
+  const AchievementCard = ({ achievement }) => (
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center">
+      <img
+        src={achievement.imageUrl}
+        alt={achievement.title}
+        className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
+        onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award" }}
+      />
+      <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{achievement.desc}</p>
+    </div>
+  );
+
+
+  const ExperienceSection = () => (
+    <section id="experience" className="section-scroll-padding py-20 bg-gray-50 dark:bg-gray-800">
+      <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Work Experience</h2>
+      <div className="max-w-5xl mx-auto space-y-8 px-4">
+        {portfolioData.experience.map((exp, index) => (
+          <ExperienceBlock
+            key={index}
+            title={exp.title}
+            company={exp.company}
+            years={exp.years}
+            description={exp.description}
+            logoUrlKey={exp.logoUrl} // Pass logo URL key
+          />
+        ))}
+      </div>
+    </section>
+  );
+
+  // FIXED: EducationSection with wider border (border-4)
+  const EducationSection = () => (
+    <section id="education" className="section-scroll-padding py-20 bg-white dark:bg-gray-900">
+      <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Education</h2>
+      <div className="max-w-xl mx-auto p-6 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg dark:shadow-2xl">
+        <div className="space-y-6">
+          {portfolioData.education.map((edu, index) => (
+            <div key={index} className="border-l-4 border-red-600 pl-4 flex flex-col">
+
+              {/* Logo Display: UPDATED border width to border-4 */}
+              <div className="flex space-x-4 mb-3">
+                {edu.logoKeys && edu.logoKeys.map((key, logoIndex) => (
+                  <div key={logoIndex} className="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-700 shadow-md p-1 border-4 border-gray-400 dark:border-gray-500">
+                    <img
+                      // Uses the updated AIU_LOGO_URL pointing to the local file
+                      src={portfolioData[key]}
+                      alt={key.replace('_URL', '') + ' Logo'}
+                      className="w-full h-full object-contain"
+                      // Reinstating a simple fallback in case the local path fails again
+                      onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/48x48/CCCCCC/4C4C4C?text=Logo` }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <p className="text-lg font-bold text-red-600">{edu.institution}</p>
+              <p className="text-xl font-semibold text-gray-800 dark:text-gray-100">{edu.degree}</p>
+              <p className="text-md text-gray-500 dark:text-gray-300">{edu.years}</p>
+
+              {/* Details List */}
+              {edu.details && edu.details.length > 0 && (
+                <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 mt-3 space-y-1">
+                  {edu.details.map((detail, detailIndex) => (
+                    <li key={detailIndex} className="text-sm">{detail}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  const AchievementCertificationSection = () => (
+    <section id="achievements" className="section-scroll-padding py-20 bg-gray-50 dark:bg-gray-800">
+      <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Achievements & Certifications</h2>
+      <div className="max-w-5xl mx-auto px-4 space-y-12">
+
+        {/* Achievements Section - Side-by-Side Cards */}
+        <div className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
+          <h3 className="text-3xl font-bold text-red-600 mb-6 border-b pb-3 border-gray-200 dark:border-gray-700">Awards & Honors</h3>
+          <div className="achievement-grid">
+            {portfolioData.achievements.map((ach, index) => (
+              <AchievementCard key={index} achievement={ach} />
+            ))}
+          </div>
+        </div>
+
+        {/* Certifications Section (Conditionally rendered) */}
+        {portfolioData.certifications.length > 0 && (
+          <div id="certs" className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
+            <h3 className="text-3xl font-bold text-red-600 mb-6 border-b pb-3">Professional Certifications</h3>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-300">
+              {portfolioData.certifications.map((cert, index) => (
+                <li key={index} className="flex items-start space-x-3 text-lg font-medium bg-gray-50 dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                  <span className="text-red-600 text-xl font-extrabold">&#x2713;</span>
+                  <span className="text-lg text-gray-700 dark:text-gray-300">{cert}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+
+
+  const ProjectSection = () => (
+    <section id="projects" className="section-scroll-padding py-20 bg-white dark:bg-gray-900">
+      <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Security Projects & Tools</h2>
+      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {portfolioData.projects.map((project, index) => (
+          <div key={index} className="bg-gray-100 dark:bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-red-500/50 transition duration-300 flex flex-col h-full border border-gray-200 dark:border-gray-700">
+            <h3 className="2xl font-bold mb-3 text-gray-800 dark:text-gray-100">{project.title}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4 flex-grow">{project.desc}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span key={tag} className="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-200">
+                                        {tag}
+                                    </span>
+              ))}
+            </div>
+            <div className="mt-auto flex space-x-4 pt-4 border-t border-gray-300 dark:border-gray-600">
+              <a href="#" target="_blank" rel="noopener noreferrer" className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 shadow-md">
+                View Tool
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-700 dark:text-gray-300 hover:text-red-600 font-bold py-2 px-4 rounded-lg transition duration-200 border border-gray-400 dark:border-gray-500 hover:border-red-600">
+                Source Code
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+
+  // --- UPDATED Contact Section ---
+  const ContactSection = () => {
+    // Filter out 'em' and 'ph' since they are displayed separately
+    const socialIcons = portfolioData.socials.filter(s => s.icon !== 'em' && s.icon !== 'ph');
+
+    return (
+      <section id="contact" className="section-scroll-padding py-20 bg-gray-50 dark:bg-gray-800">
+        <h2 className="text-4xl font-extrabold mb-12 text-gray-800 dark:text-gray-100 text-center">Contact Me</h2>
+
+        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+
+          {/* Left Column: Direct Contact Info and Social Links */}
+          <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
+            <h3 className="text-3xl font-bold text-red-600 mb-3">Let's Connect!</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Discuss a project or just want to say hi? My inbox is open for all.
+            </p>
+
+            {/* Phone Number */}
+            <div className="flex items-center space-x-4 mb-4">
+              <span className="text-red-600 text-2xl"><Icon name="ph" /></span>
+              <a href={`tel:${portfolioData.phone.replace(/[\s-]/g, '')}`} className="text-xl font-medium text-gray-800 dark:text-gray-200 hover:text-red-600 transition">
+                {portfolioData.phone}
+              </a>
+            </div>
+
+            {/* Email Address */}
+            <div className="flex items-center space-x-4 mb-6">
+              <span className="text-red-600 text-2xl"><Icon name="em" /></span>
+              <a href={`mailto:${portfolioData.socials.find(s => s.icon === 'em').url.replace('mailto:', '')}`} className="text-xl font-medium text-gray-800 dark:text-gray-200 hover:text-red-600 transition">
+                {portfolioData.socials.find(s => s.icon === 'em').url.replace('mailto:', '')}
+              </a>
+            </div>
+
+            {/* Social Icons (GitHub, LinkedIn, etc.) */}
+            <div className="flex space-x-4 border-t pt-4 border-gray-200 dark:border-gray-700">
+              {socialIcons.map(social => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 text-gray-600 dark:text-gray-300 hover:text-red-600 transition duration-300 bg-gray-100 dark:bg-gray-800 rounded-full"
+                  title={social.name}
+                >
+                  <Icon name={social.icon} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column: Dynamic SVG Illustration */}
+          <div className="hidden md:flex justify-center items-center h-full relative">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-sm h-auto">
+              {/* Abstract shapes for background visual interest (like in the example image) */}
+              <circle cx="150" cy="50" r="10" fill="#FCA5A5" opacity="0.6"/> {/* Light Red Dot */}
+              <rect x="10" y="100" width="10" height="40" rx="5" fill="#DC2626" opacity="0.3" transform="rotate(20, 10, 100)"/> {/* Red Block */}
+              <rect x="180" y="150" width="20" height="5" rx="2" fill="#9CA3AF" opacity="0.4"/> {/* Gray Line */}
+
+              {/* Main Envelope Icon (Center Focus) */}
+              <g transform="translate(100, 100)" stroke="#DC2626" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="-70" y="-50" width="140" height="100" rx="10" fill="#FEE2E2" className="transition-transform duration-500 hover:scale-105 dark:fill-red-900/50"/>
+                {/* Envelope flap open/close effect */}
+                <path
+                  d="M-70 -50 L0 0 L70 -50"
+                  stroke="#DC2626"
+                  fill="#DC2626"
+                  className="transition-transform duration-500"
+                />
+                <path
+                  d="M-70 -50 L-70 50 L70 50 L70 -50"
+                  stroke="#DC2626"
+                  fill="none"
+                />
+
+                {/* Animation on the main envelope path (Simulating received message pulse) */}
+                <path d="M-60 -40 L0 10 L60 -40" stroke="#DC2626" strokeWidth="3">
+                  <animate attributeName="opacity" values="1; 0.5; 1" dur="2s" repeatCount="indefinite" />
+                </path>
+              </g>
+            </svg>
+          </div>
+
+        </div>
+      </section>
+    );
+  };
+  // --- END UPDATED Contact Section ---
+
+
+  // --- Main App (Scroll Logic Included) ---
+
+  const App = () => {
+    // 1. Check localStorage for theme preference on load
+    const initialDarkMode = localStorage.getItem('darkMode') === 'true';
+    const [isDarkMode, setIsDarkMode] = useState(initialDarkMode);
+
+    // Existing scroll logic
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    // Theme toggle function: now updates localStorage
+    const toggleTheme = () => {
+      setIsDarkMode(prev => {
+        const newState = !prev;
+        localStorage.setItem('darkMode', newState); // Save preference
+        return newState;
+      });
+    };
+
+    // Effect to apply the 'dark' class to the html tag whenever isDarkMode changes
+    useEffect(() => {
+      document.documentElement.classList.toggle('dark', isDarkMode);
+    }, [isDarkMode]);
+
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollThreshold = 100; // Only start hiding after scrolling past 100px from the top
+
+      if (currentScrollY > scrollThreshold) {
+        if (currentScrollY > lastScrollY) {
+          // Scrolling Down (Hide Navbar)
+          setIsVisible(false);
+        } else {
+          // Scrolling Up (Show Navbar)
+          setIsVisible(true);
+        }
+      } else {
+        // At or near the top, always show the navbar
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]); // Depend on lastScrollY to ensure the direction check is accurate
+
+    return (
+      <div className="min-h-screen">
+        <Navbar isVisible={isVisible} isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        <div className="container mx-auto">
+          <Hero />
+          <WhatIDoSection />
+          <ProficiencySection />
+          <ExperienceSection />
+          <ProjectSection />
+          <EducationSection />
+          <AchievementCertificationSection />
+          <ContactSection />
+        </div>
+      </div>
+    );
+  };
+
+  // Render the App
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<App />);
+
+</script>
+</body>
+</html>
