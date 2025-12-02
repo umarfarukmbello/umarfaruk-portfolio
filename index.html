@@ -56,15 +56,34 @@
     /* Custom progress bar styles */
     .progress-bar-container {
       background-color: #e5e7eb; /* Light background for the bar track */
-      height: 12px;
+      height: 24px; /* Increased height to fit text inside */
       border-radius: 6px;
       overflow: hidden;
+      /* Added shadow for better contrast */
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
     }
     .progress-bar {
       /* Primary color for Cyber Security focus */
       background-color: #dc2626;
       transition: width 1s ease-in-out;
+      height: 100%;
+      /* Setup for containing the percentage text */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Align text to the right end of the bar */
+      min-width: 40px; /* Ensures space for the text even at low percentages */
     }
+    .percentage-text {
+        /* Style for the number inside the bar */
+        color: white;
+        font-weight: bold;
+        font-size: 0.875rem; /* text-sm equivalent */
+        padding-right: 8px; /* p-2 equivalent */
+        line-height: 1;
+        /* Ensure the text is visible and doesn't get cut off */
+        white-space: nowrap;
+    }
+
     /* Ensure responsive font size on mobile */
     @media (max-width: 640px) {
       .text-6xl { font-size: 3rem; }
@@ -259,17 +278,18 @@
     }
   };
 
-  // UPDATED: SkillBar component (non-interactive)
+  // UPDATED: SkillBar component (to include percentage inside the bar)
   const SkillBar = ({ label, percentage }) => {
     return (
       <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600 shadow-sm">
-        <div className="mb-4">
-          <div className="flex justify-between mb-1">
-            <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">{label}</span>
-            <span className="text-lg font-bold text-red-600">{percentage}%</span>
-          </div>
-          <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${percentage}%` }}></div>
+        <div className="mb-2">
+          {/* Skill Label (Moved the label higher) */}
+          <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">{label}</span>
+        </div>
+        <div className="progress-bar-container">
+          {/* Percentage text is now inside the progress-bar div */}
+          <div className="progress-bar" style={{ width: `${percentage}%` }}>
+              <span className="percentage-text">{percentage}%</span>
           </div>
         </div>
       </div>
