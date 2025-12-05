@@ -197,11 +197,12 @@
     certifications: [
       "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)"
     ],
+    // UPDATED: Achievement List is now unified and includes the PCEP certificate
     achievements: [
       {
         title: "3x Dean's List Award",
         desc: "Maintained exceptional academic performance for three consecutive semesters.",
-        // *** FIX APPLIED: Renamed file path to remove space for server compatibility ***
+        // Corrected path to remove spaces
         imageUrl: "img/dean-list.jpeg"
       },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
@@ -210,7 +211,13 @@
         desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
         imageUrl: "img/SCI Com.jpg"
       },
-      { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
+      { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" },
+      // Added PCEP certificate back into the main achievement list
+      {
+        title: "PCEP Certification (Python)",
+        desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
+        imageUrl: "img/pcep-certification.jpeg"
+      }
     ],
     experience: [
       {
@@ -704,20 +711,21 @@
     </div>
   );
 
-  // --- New Achievement Card Component ---
+  // --- New Achievement Card Component - MODIFIED onError handler ---
   const AchievementCard = ({ achievement }) => (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 flex flex-col items-center text-center">
       <img
         src={achievement.imageUrl}
         alt={achievement.title}
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
-        // UPDATED: Custom onError handler, simplifying logic to rely only on generic fallback for all broken images
+        // FIX: If the image fails to load, replace it with a generic "Award" placeholder image.
+        // This hides the image missing text and displays a consistent placeholder instead.
         onError={(e) => {
           e.target.onerror = null; // Prevent infinite loop
-
-          // Fallback logic: Use a generic placeholder box to avoid the red diagnostic text.
-          e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Image Missing`;
-          e.target.style.filter = "grayscale(100%)"; // Visual hint that it is a fallback
+          
+          // Fallback logic: Use a generic placeholder box with the text "Award"
+          e.target.src = `https://placehold.co/200x144/222222/FFFFFF?text=Award`; 
+          e.target.style.filter = "none"; // Ensure color is maintained
         }}
       />
       <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
@@ -797,19 +805,11 @@
         <div className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
           <h3 className="text-3xl font-bold text-red-600 mb-6 border-b pb-3 border-gray-200 dark:border-gray-700">Awards & Honors</h3>
           <div className="achievement-grid">
+            {/* RENDERED ALL achievements using the main array */}
             {portfolioData.achievements.map((ach, index) => (
               <AchievementCard key={index} achievement={ach} />
             ))}
-            {/* Certifications Card: Manually included to display alongside awards */}
-            <AchievementCard
-              achievement={{
-                title: "PCEP Certification (Python)",
-                desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
-                // --- FIX: Using the pcep-certification.jpeg path which is visible in the file explorer screenshot ---
-                imageUrl: "img/pcep-certification.jpeg"
-                // ------------------------------------------------------------------------------------------------
-              }}
-            />
+            {/* Removed the manual PCEP card */}
           </div>
         </div>
 
@@ -1022,9 +1022,12 @@
   };
 
   // Render the App
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<App />);
-
+  // FIX 1: Wrapped ReactDOM.createRoot in window.onload to resolve the "ReactDOM is not defined" error.
+  // FIX 2: AchievementCard onError handler now displays a clean "Award" placeholder (line 802).
+  window.onload = function() {
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  };
 </script>
 </body>
 </html>
