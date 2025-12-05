@@ -6,6 +6,7 @@
   <title>Umar Faruk | Cyber Security Specialist</title>
 
   <!-- Favicon/Avatar Link: Using the reliable PNG format -->
+  <!-- NOTE: This is a placeholder path. Ensure 'img/avatar.png' exists locally -->
   <link rel="icon" type="image/png" href="img/avatar.png">
 
   <!-- Load Google Font for Signature Style -->
@@ -56,15 +57,34 @@
     /* Custom progress bar styles */
     .progress-bar-container {
       background-color: #e5e7eb; /* Light background for the bar track */
-      height: 12px;
+      height: 24px; /* Increased height to fit text inside */
       border-radius: 6px;
       overflow: hidden;
+      /* Added shadow for better contrast */
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     }
     .progress-bar {
       /* Primary color for Cyber Security focus */
       background-color: #dc2626;
       transition: width 1s ease-in-out;
+      height: 100%;
+      /* Setup for containing the percentage text */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Align text to the right end of the bar */
+      min-width: 40px; /* Ensures space for the text even at low percentages */
     }
+    .percentage-text {
+      /* Style for the number inside the bar */
+      color: white;
+      font-weight: bold;
+      font-size: 0.875rem; /* text-sm equivalent */
+      padding-right: 8px; /* p-2 equivalent */
+      line-height: 1;
+      /* Ensure the text is visible and doesn't get cut off */
+      white-space: nowrap;
+    }
+
     /* Ensure responsive font size on mobile */
     @media (max-width: 640px) {
       .text-6xl { font-size: 3rem; }
@@ -131,22 +151,21 @@
 
   // --- Portfolio Data (Customized for Cyber Security) ---
   const portfolioData = {
-    name: "Umar Faruk", // CHANGED: from "Umar Faruk Mbello" to "Umar Faruk"
+    name: "Umar Faruk",
     title: "Cyber Security Specialist & Network Defense Engineer",
     bio: "A Computer Science specialist focused on protecting digital assets, implementing robust security protocols, and performing penetration testing and vulnerability analysis. Proficient in network defense and threat intelligence.",
     socials: [
-      { name: "LinkedIn", url: "https://www.linkedin.com/in/umar-faruk-bello-84594831a/", icon: "in" },
+      { name: "LinkedIn", url: "https://www.linkedin.com/in/umar-faruk-m-bello-84594831a/", icon: "in" },
       { name: "GitHub", url: "https://github.com/umarfarukmbello", icon: "gh" },
       { name: "Email", url: "mailto:belloumarfaruk05@gmail.com", icon: "em" }
     ],
-    phone: "+60 11-6183 3761", // Added phone number
+    phone: "+60 11-6183 3761",
     // Profile and Award image placeholders (Referencing local files from the img/ folder)
     PROFILE_PHOTO_URL: "img/id card-12.jpg",
     AWARD_PHOTO_URL: "img/best research.jpeg",
     // NOTE: For the FYP logo, we use a placeholder since it's not provided in the asset list
     FYP_LOGO_URL: "https://placehold.co/100x100/3B82F6/FFFFFF?text=SMS",
     SCIC_LOGO_URL: "img/SCI Com.jpg",
-    // --- UPDATED: Pointing to the new image file in the local assets folder ---
     AIU_LOGO_URL: "img/aiu logo2.png",
 
     techStack: [
@@ -164,7 +183,6 @@
       "Leading incident response and forensic analysis efforts.",
       "Managing cloud security and compliance within Google Cloud Platform (GCP)."
     ],
-    // UPDATED EDUCATION - Only the relevant entry remains
     education: [
       {
         institution: "AlBukhary International University",
@@ -173,13 +191,25 @@
         details: [
           "Executive Committee member, School of Computing and Informatics.",
         ],
-        logoKeys: ["AIU_LOGO_URL"] // Key for the AIU logo
+        logoKeys: ["AIU_LOGO_URL"]
       },
     ],
-    certifications: [], // REMOVED: Certifications as requested by the user
+    certifications: [
+      "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)"
+    ],
     achievements: [
-      { title: "3x Dean's List Award", desc: "Maintained exceptional academic performance for three consecutive semesters.", imageUrl: "img/dean list.jpeg" },
+      {
+        title: "3x Dean's List Award",
+        desc: "Maintained exceptional academic performance for three consecutive semesters.",
+        // *** FIX APPLIED: Renamed file path to remove space for server compatibility ***
+        imageUrl: "img/dean-list.jpeg"
+      },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
+      {
+        title: "SCIC Committee Member Recognition",
+        desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
+        imageUrl: "img/SCI Com.jpg"
+      },
       { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
     ],
     experience: [
@@ -254,17 +284,18 @@
     }
   };
 
-  // UPDATED: SkillBar component (non-interactive)
+  // UPDATED: SkillBar component (to include percentage inside the bar)
   const SkillBar = ({ label, percentage }) => {
     return (
       <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600 shadow-sm">
-        <div className="mb-4">
-          <div className="flex justify-between mb-1">
-            <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">{label}</span>
-            <span className="text-lg font-bold text-red-600">{percentage}%</span>
-          </div>
-          <div className="progress-bar-container">
-            <div className="progress-bar" style={{ width: `${percentage}%` }}></div>
+        <div className="mb-2">
+          {/* Skill Label (Moved the label higher) */}
+          <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">{label}</span>
+        </div>
+        <div className="progress-bar-container">
+          {/* Percentage text is now inside the progress-bar div */}
+          <div className="progress-bar" style={{ width: `${percentage}%` }}>
+            <span className="percentage-text">{percentage}%</span>
           </div>
         </div>
       </div>
@@ -550,8 +581,8 @@
         <div className="flex justify-center md:justify-start pt-8 pb-4">
           {/* Static illustration for Cyber Security / Typing setup */}
           <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Desk (Brown) */}
-            <rect x="0" y="220" width="400" height="80" rx="5" fill="#B48D6C" className="dark:fill-gray-700"/>
+            {/* Desk (Brown) - Reduced width and centered by shifting X position */}
+            <rect x="50" y="220" width="300" height="80" rx="5" fill="#B48D6C" className="dark:fill-gray-700"/>
             {/* Monitor (Dark Gray/Black) */}
             <rect x="150" y="70" width="100" height="100" rx="8" fill="#333333" className="dark:fill-gray-700"/>
             <rect x="145" y="65" width="110" height="10" rx="3" fill="#6B7280" className="dark:fill-gray-600"/>
@@ -561,17 +592,12 @@
             <circle cx="200" cy="50" r="15" fill="#FFC700"/>
             {/* Person Body (Red/Cyber Color) */}
             <rect x="180" y="65" width="40" height="80" rx="5" fill="#DC2626"/>
-            {/* Typing Hands/Arms (White) */}
-            <rect x="150" y="170" width="50" height="10" rx="5" transform="rotate(10, 150, 170)" fill="#FFFFFF" className="dark:fill-gray-300"/>
-            <rect x="200" y="170" width="50" height="10" rx="5" transform="rotate(-10, 200, 170)" fill="#FFFFFF" className="dark:fill-gray-300"/>
             {/* Security Lock Icon (Placeholder for the typing effect focus) */}
             <svg x="185" y="90" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </svg>
-
-          {/* REMOVED: "Illustration: Focused on Secure Development." text */}
         </div>
 
         {/* Right Column: Capabilities and Icon Stack */}
@@ -612,7 +638,8 @@
 
         {/* Right Column: New Interactive Illustration (Takes full width on mobile, 1/2 on desktop) */}
         <div className="flex justify-center md:justify-end md:col-span-1">
-          <svg width="100%" height="400px" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
+          {/* Reduced height from 400px to 300px to fix vertical overflow */}
+          <svg width="100%" height="300px" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
             {/* Laptop Base */}
             <rect x="50" y="150" width="280" height="120" rx="10" fill="#374151" className="shadow-lg dark:fill-gray-700"/>
             {/* Laptop Screen */}
@@ -644,6 +671,8 @@
           </svg>
         </div>
       </div>
+      {/* ADDED bottom padding to ensure clear separation from the next section */}
+      <div className="pt-10"></div>
     </section>
   );
 
@@ -682,7 +711,14 @@
         src={achievement.imageUrl}
         alt={achievement.title}
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
-        onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award" }}
+        // UPDATED: Custom onError handler, simplifying logic to rely only on generic fallback for all broken images
+        onError={(e) => {
+          e.target.onerror = null; // Prevent infinite loop
+
+          // Fallback logic: Use a generic placeholder box to avoid the red diagnostic text.
+          e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Image Missing`;
+          e.target.style.filter = "grayscale(100%)"; // Visual hint that it is a fallback
+        }}
       />
       <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{achievement.desc}</p>
@@ -764,10 +800,20 @@
             {portfolioData.achievements.map((ach, index) => (
               <AchievementCard key={index} achievement={ach} />
             ))}
+            {/* Certifications Card: Manually included to display alongside awards */}
+            <AchievementCard
+              achievement={{
+                title: "PCEP Certification (Python)",
+                desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
+                // --- FIX: Using the pcep-certification.jpeg path which is visible in the file explorer screenshot ---
+                imageUrl: "img/pcep-certification.jpeg"
+                // ------------------------------------------------------------------------------------------------
+              }}
+            />
           </div>
         </div>
 
-        {/* Certifications Section (Conditionally rendered) */}
+        {/* Certifications Section (Conditionally rendered, mainly for list of titles if any) */}
         {portfolioData.certifications.length > 0 && (
           <div id="certs" className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow-inner border border-gray-200 dark:border-gray-700">
             <h3 className="text-3xl font-bold text-red-600 mb-6 border-b pb-3">Professional Certifications</h3>
@@ -896,6 +942,8 @@
                 </path>
               </g>
             </svg>
+            {/* Optional: Hidden text for accessibility */}
+            <span className="sr-only">Cyber Security Scanning Lock Illustration</span>
           </div>
 
         </div>
