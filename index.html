@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umar Faruk | Cyber Security Specialist</title>
-
+  
   <!-- Favicon/Avatar Link: Using the reliable PNG format -->
   <link rel="icon" type="image/png" href="img/avatar.png">
-
+  
   <!-- Load Google Font for Signature Style -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"> 
   <!-- Using Dancing Script - it's elegant and less readable for a signature look -->
-
+  
   <!-- Load Tailwind CSS from CDN for instant styling -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Tailwind CSS Config to enable 'dark' class mode -->
@@ -60,7 +60,7 @@
       border-radius: 6px;
       overflow: hidden;
       /* Added shadow for better contrast */
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
     }
     .progress-bar {
       /* Primary color for Cyber Security focus */
@@ -74,14 +74,14 @@
       min-width: 40px; /* Ensures space for the text even at low percentages */
     }
     .percentage-text {
-      /* Style for the number inside the bar */
-      color: white;
-      font-weight: bold;
-      font-size: 0.875rem; /* text-sm equivalent */
-      padding-right: 8px; /* p-2 equivalent */
-      line-height: 1;
-      /* Ensure the text is visible and doesn't get cut off */
-      white-space: nowrap;
+        /* Style for the number inside the bar */
+        color: white;
+        font-weight: bold;
+        font-size: 0.875rem; /* text-sm equivalent */
+        padding-right: 8px; /* p-2 equivalent */
+        line-height: 1;
+        /* Ensure the text is visible and doesn't get cut off */
+        white-space: nowrap;
     }
 
     /* Ensure responsive font size on mobile */
@@ -196,21 +196,17 @@
       },
     ],
     certifications: [
-      "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)" // Add this to the Certifications list
-    ],
+        "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)" // Add this to the Certifications list
+    ], 
     achievements: [
       { title: "3x Dean's List Award", desc: "Maintained exceptional academic performance for three consecutive semesters.", imageUrl: "img/dean list.jpeg" },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
-      {
-        title: "SCIC Committee Member Recognition",
-        desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
-        imageUrl: "img/SCI Com.jpg"
+      { 
+        title: "SCIC Committee Member Recognition", 
+        desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.", 
+        imageUrl: "img/SCI Com.jpg" 
       }, // ADDED NEW ACHIEVEMENT
-      {
-        title: "PCEP Certification",
-        desc: "Successfully completed the requirements to be recognized as a Certified Entry-Level Python Programmer.",
-        imageUrl: "img/pcep.png" // Use the provided image name
-      },
+      // REMOVED THE DUPLICATE PCEP ENTRY HERE
       { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
     ],
     experience: [
@@ -296,7 +292,7 @@
         <div className="progress-bar-container">
           {/* Percentage text is now inside the progress-bar div */}
           <div className="progress-bar" style={{ width: `${percentage}%` }}>
-            <span className="percentage-text">{percentage}%</span>
+              <span className="percentage-text">{percentage}%</span>
           </div>
         </div>
       </div>
@@ -312,8 +308,8 @@
           {/* Header and Close Button */}
           <div className="flex justify-between items-center mb-10 border-b border-gray-200 dark:border-gray-700 pb-4">
             <h2 className="text-4xl font-extrabold text-red-600 font-signature leading-none">
-              {/* Apply signature font here too */}
-              Umar Faruk
+                {/* Apply signature font here too */}
+                Umar Faruk
             </h2>
             <button
               onClick={closeMenu}
@@ -371,7 +367,7 @@
       { linkText: 'Achievements', href: '#achievements' },
       { linkText: 'Contact', href: '#contact' }
     ];
-
+    
     // Function to close the mobile menu
     const closeMenu = () => setIsMenuOpen(false);
 
@@ -400,7 +396,7 @@
                       target={item.linkText === 'Resume' ? '_blank' : '_self'}
                     >
                       {item.linkText}
-                    </a>
+                      </a>
                   </li>
                 ))}
               </ul>
@@ -436,7 +432,7 @@
             </div>
           </div>
         </nav>
-
+        
         {/* Mobile Menu Rendered outside of Navbar, but controlled here */}
         <MobileMenu
           isOpen={isMenuOpen}
@@ -678,7 +674,7 @@
         </div>
       </div>
       {/* ADDED bottom padding to ensure clear separation from the next section */}
-      <div className="pt-10"></div>
+      <div className="pt-10"></div> 
     </section>
   );
 
@@ -799,8 +795,8 @@
             {portfolioData.achievements.map((ach, index) => (
               <AchievementCard key={index} achievement={ach} />
             ))}
-            {/* Certifications Card: Moved inside Achievements to share the grid layout */}
-            <AchievementCard
+            {/* Certifications Card: Manually included to display alongside awards */}
+             <AchievementCard
               achievement={{
                 title: "PCEP Certification (Python)",
                 desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
@@ -939,6 +935,8 @@
                 </path>
               </g>
             </svg>
+            {/* Optional: Hidden text for accessibility */}
+            <span className="sr-only">Cyber Security Scanning Lock Illustration</span>
           </div>
 
         </div>
@@ -988,7 +986,7 @@
         }
       } else {
         // At or near the top, always show the navbar
-        setIsVisible(true);
+          setIsVisible(true);
       }
 
       setLastScrollY(currentScrollY);
