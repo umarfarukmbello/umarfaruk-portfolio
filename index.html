@@ -198,7 +198,12 @@
       "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)" 
     ],
     achievements: [
-      { title: "3x Dean's List Award", desc: "Maintained exceptional academic performance for three consecutive semesters.", imageUrl: "img/dean list.jpeg" },
+      { 
+        title: "3x Dean's List Award", 
+        desc: "Maintained exceptional academic performance for three consecutive semesters.", 
+        // *** FIX APPLIED: Renamed file path to remove space for server compatibility ***
+        imageUrl: "img/dean-list.jpeg" 
+      },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
       {
         title: "SCIC Committee Member Recognition",
@@ -706,7 +711,25 @@
         src={achievement.imageUrl}
         alt={achievement.title}
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
-        onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award" }}
+        // UPDATED: Custom onError handler, now checking for 'pcert.png'
+        onError={(e) => {
+            e.target.onerror = null;
+            // Fallback content: Show generic 'Award' text unless it's the PCEP/pcert which has the specific red warning
+            const isPcep = achievement.imageUrl.includes('pcert.png'); 
+            
+            if (isPcep) {
+                // Specific Red Warning for PCEP
+                e.target.style.display = 'none'; // Hide the broken image icon
+                const parent = e.target.parentNode;
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.className = 'w-full h-36 flex items-center justify-center bg-red-100 dark:bg-red-900/50 rounded-lg border-2 border-red-400 p-2 text-red-700 dark:text-red-200 text-xs font-bold';
+                fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/pcert.png' path and capitalization on server.</span></div>`;
+                parent.insertBefore(fallbackDiv, e.target.nextSibling); // Insert fallback after the image
+            } else {
+                // Generic Award Placeholder for all others (including Dean's List)
+                e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award`;
+            }
+        }}
       />
       <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{achievement.desc}</p>
@@ -793,8 +816,7 @@
               achievement={{
                 title: "PCEP Certification (Python)",
                 desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
-                // *** CORRECTION APPLIED HERE: ENSURING LOWERCASE FILENAME FOR DEPLOYMENT CONSISTENCY ***
-                imageUrl: "img/pcep.png" 
+                imageUrl: "img/pcert.png" 
               }}
             />
           </div>
