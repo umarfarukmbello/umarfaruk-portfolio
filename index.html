@@ -211,7 +211,12 @@
         desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
         imageUrl: "img/SCI Com.jpg"
       },
-      { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" },
+      {
+        title: "Modern Web Development Workshop Series: Frontend Edition",
+        desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.",
+        // FIX: Changed file extension case from .JPG to .jpg for server compatibility
+        imageUrl: "img/front.jpg"
+      },
       // Added PCEP certificate back into the main achievement list
       {
         title: "PCEP Certification (Python)",
@@ -722,9 +727,9 @@
         // This hides the image missing text and displays a consistent placeholder instead.
         onError={(e) => {
           e.target.onerror = null; // Prevent infinite loop
-          
+
           // Fallback logic: Use a generic placeholder box with the text "Award"
-          e.target.src = `https://placehold.co/200x144/222222/FFFFFF?text=Award`; 
+          e.target.src = `https://placehold.co/200x144/222222/FFFFFF?text=Award`;
           e.target.style.filter = "none"; // Ensure color is maintained
         }}
       />
@@ -1031,3 +1036,4 @@
 </script>
 </body>
 </html>
+
