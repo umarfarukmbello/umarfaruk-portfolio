@@ -711,25 +711,13 @@
         src={achievement.imageUrl}
         alt={achievement.title}
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
-        // UPDATED: Custom onError handler, now checking for 'pcep-certification.jpeg'
+        // UPDATED: Custom onError handler, simplifying logic to rely only on generic fallback for all broken images
         onError={(e) => {
-          e.target.onerror = null;
-          // Fallback content: Show generic 'Award' text unless it's the PCEP/pcert which has the specific red warning
-          // CHECK: Check if the filename contains 'pcep-certification' (case-insensitive) and ends with '.jpeg'
-          const isPCERT = achievement.imageUrl.toLowerCase().includes('pcep-certification') && achievement.imageUrl.toLowerCase().endsWith('.jpeg');
+          e.target.onerror = null; // Prevent infinite loop
 
-          if (isPCERT) {
-            // Specific Red Warning for PCEP
-            e.target.style.display = 'none'; // Hide the broken image icon
-            const parent = e.target.parentNode;
-            const fallbackDiv = document.createElement('div');
-            fallbackDiv.className = 'w-full h-36 flex items-center justify-center bg-red-100 dark:bg-red-900/50 rounded-lg border-2 border-red-400 p-2 text-red-700 dark:text-red-200 text-xs font-bold';
-            fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/pcep-certification.jpeg' path and capitalization on server.</span></div>`;
-            parent.insertBefore(fallbackDiv, e.target.nextSibling); // Insert fallback after the image
-          } else {
-            // Generic Award Placeholder for all others (including Dean's List)
-            e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award`;
-          }
+          // Fallback logic: Use a generic placeholder box to avoid the red diagnostic text.
+          e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Image Missing`;
+          e.target.style.filter = "grayscale(100%)"; // Visual hint that it is a fallback
         }}
       />
       <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
@@ -817,9 +805,9 @@
               achievement={{
                 title: "PCEP Certification (Python)",
                 desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
-                // --- CORRECT PATH: img/pcep-certification.jpeg ---
+                // --- FIX: Using the pcep-certification.jpeg path which is visible in the file explorer screenshot ---
                 imageUrl: "img/pcep-certification.jpeg"
-                // ------------------------------------------------
+                // ------------------------------------------------------------------------------------------------
               }}
             />
           </div>
@@ -1040,4 +1028,3 @@
 </script>
 </body>
 </html>
-
