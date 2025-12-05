@@ -151,7 +151,7 @@
 
   // --- Portfolio Data (Customized for Cyber Security) ---
   const portfolioData = {
-    name: "Umar Faruk", 
+    name: "Umar Faruk",
     title: "Cyber Security Specialist & Network Defense Engineer",
     bio: "A Computer Science specialist focused on protecting digital assets, implementing robust security protocols, and performing penetration testing and vulnerability analysis. Proficient in network defense and threat intelligence.",
     socials: [
@@ -159,7 +159,7 @@
       { name: "GitHub", url: "https://github.com/umarfarukmbello", icon: "gh" },
       { name: "Email", url: "mailto:belloumarfaruk05@gmail.com", icon: "em" }
     ],
-    phone: "+60 11-6183 3761", 
+    phone: "+60 11-6183 3761",
     // Profile and Award image placeholders (Referencing local files from the img/ folder)
     PROFILE_PHOTO_URL: "img/id card-12.jpg",
     AWARD_PHOTO_URL: "img/best research.jpeg",
@@ -191,25 +191,25 @@
         details: [
           "Executive Committee member, School of Computing and Informatics.",
         ],
-        logoKeys: ["AIU_LOGO_URL"] 
+        logoKeys: ["AIU_LOGO_URL"]
       },
     ],
     certifications: [
-      "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)" 
+      "PCEP™ – Certified Entry-Level Python Programmer (Python Institute)"
     ],
     achievements: [
-      { 
-        title: "3x Dean's List Award", 
-        desc: "Maintained exceptional academic performance for three consecutive semesters.", 
+      {
+        title: "3x Dean's List Award",
+        desc: "Maintained exceptional academic performance for three consecutive semesters.",
         // *** FIX APPLIED: Renamed file path to remove space for server compatibility ***
-        imageUrl: "img/dean-list.jpeg" 
+        imageUrl: "img/dean-list.jpeg"
       },
       { title: "Best Research Paper Award", desc: "Recognized for outstanding research on Predictive Modeling for Cybersecurity Risk Assessment.", imageUrl: "img/best research.jpeg" },
       {
         title: "SCIC Committee Member Recognition",
         desc: "Contributed to organizing and executing academic and scientific events at university, supporting student research initiatives and promoting STEM engagement across campus.",
         imageUrl: "img/SCI Com.jpg"
-      }, 
+      },
       { title: "Modern Web Development Workshop Series: Frontend Edition", desc: "Completed intensive training focused on cutting-edge frontend technologies (React, Tailwind) for modern application development.", imageUrl: "img/front.JPG" }
     ],
     experience: [
@@ -713,22 +713,22 @@
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
         // UPDATED: Custom onError handler, now checking for 'pcert.png'
         onError={(e) => {
-            e.target.onerror = null;
-            // Fallback content: Show generic 'Award' text unless it's the PCEP/pcert which has the specific red warning
-            const isPcep = achievement.imageUrl.includes('pcert.png'); 
-            
-            if (isPcep) {
-                // Specific Red Warning for PCEP
-                e.target.style.display = 'none'; // Hide the broken image icon
-                const parent = e.target.parentNode;
-                const fallbackDiv = document.createElement('div');
-                fallbackDiv.className = 'w-full h-36 flex items-center justify-center bg-red-100 dark:bg-red-900/50 rounded-lg border-2 border-red-400 p-2 text-red-700 dark:text-red-200 text-xs font-bold';
-                fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/pcert.png' path and capitalization on server.</span></div>`;
-                parent.insertBefore(fallbackDiv, e.target.nextSibling); // Insert fallback after the image
-            } else {
-                // Generic Award Placeholder for all others (including Dean's List)
-                e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award`;
-            }
+          e.target.onerror = null;
+          // Fallback content: Show generic 'Award' text unless it's the PCEP/pcert which has the specific red warning
+          const isPCERT = achievement.imageUrl.includes('PCERT.png');
+
+          if (isPCERT) {
+            // Specific Red Warning for PCEP
+            e.target.style.display = 'none'; // Hide the broken image icon
+            const parent = e.target.parentNode;
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'w-full h-36 flex items-center justify-center bg-red-100 dark:bg-red-900/50 rounded-lg border-2 border-red-400 p-2 text-red-700 dark:text-red-200 text-xs font-bold';
+            fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/PCERT.png' path and capitalization on server.</span></div>`;
+            parent.insertBefore(fallbackDiv, e.target.nextSibling); // Insert fallback after the image
+          } else {
+            // Generic Award Placeholder for all others (including Dean's List)
+            e.target.src = `https://placehold.co/200x144/E5E7EB/4C4C4C?text=Award`;
+          }
         }}
       />
       <h4 className="text-md font-semibold text-gray-800 dark:text-gray-100 mt-2">{achievement.title}</h4>
@@ -816,7 +816,7 @@
               achievement={{
                 title: "PCEP Certification (Python)",
                 desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
-                imageUrl: "img/pcert.png" 
+                imageUrl: "img/pcert.png"
               }}
             />
           </div>
