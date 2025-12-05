@@ -711,11 +711,12 @@
         src={achievement.imageUrl}
         alt={achievement.title}
         className="w-full h-36 object-cover rounded-lg mb-3 border border-gray-300 dark:border-gray-600"
-        // UPDATED: Custom onError handler, now checking for 'pcert.png'
+        // UPDATED: Custom onError handler, now checking for 'pcep-certification.jpeg'
         onError={(e) => {
           e.target.onerror = null;
           // Fallback content: Show generic 'Award' text unless it's the PCEP/pcert which has the specific red warning
-          const isPCERT = achievement.imageUrl.includes('PCERT.png');
+          // CHECK: Check if the filename contains 'pcep-certification' (case-insensitive) and ends with '.jpeg'
+          const isPCERT = achievement.imageUrl.toLowerCase().includes('pcep-certification') && achievement.imageUrl.toLowerCase().endsWith('.jpeg');
 
           if (isPCERT) {
             // Specific Red Warning for PCEP
@@ -723,7 +724,7 @@
             const parent = e.target.parentNode;
             const fallbackDiv = document.createElement('div');
             fallbackDiv.className = 'w-full h-36 flex items-center justify-center bg-red-100 dark:bg-red-900/50 rounded-lg border-2 border-red-400 p-2 text-red-700 dark:text-red-200 text-xs font-bold';
-            fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/PCERT.png' path and capitalization on server.</span></div>`;
+            fallbackDiv.innerHTML = `<div>CERT IMAGE MISSING<br/><span class='font-normal'>Check 'img/pcep-certification.jpeg' path and capitalization on server.</span></div>`;
             parent.insertBefore(fallbackDiv, e.target.nextSibling); // Insert fallback after the image
           } else {
             // Generic Award Placeholder for all others (including Dean's List)
@@ -816,7 +817,9 @@
               achievement={{
                 title: "PCEP Certification (Python)",
                 desc: "Certified Entry-Level Python Programmer, validating foundational knowledge of Python programming, core syntax, and object-oriented concepts.",
-                imageUrl: "img/pcert.png"
+                // --- CORRECT PATH: img/pcep-certification.jpeg ---
+                imageUrl: "img/pcep-certification.jpeg"
+                // ------------------------------------------------
               }}
             />
           </div>
@@ -1037,3 +1040,4 @@
 </script>
 </body>
 </html>
+
